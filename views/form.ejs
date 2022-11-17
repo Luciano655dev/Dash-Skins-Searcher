@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cs Skin Search</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <h1>Dash SKin Search</h1>
+  <h2>By: Luciano655dev</h2>
+
+  <form action="/form" method="GET">
+    <input type="text" name="weaponName" placeholder="weaponName" required>
+    <input type="text" name="skinName" placeholder="skinName" required>
+    <input type="text" name="lowestPrice" placeholder="lowestPrice" required>
+
+    <button type="submit">submit</button>
+  </form>
+
+  <div>
+    <% if (!nothingFounded) { %>
+      <div class="container">
+        <div class="card">
+          <div class="imgBx">
+            <img src=<%= img %>>
+          </div>
+          <div class="contentBx">
+            <h2><%= weaponName %> <%= skinName %></h2>
+            <div class="size">
+              <h3>Float: <%= float %></h3>
+              <h3>Price: R$<%= price %></h3>
+            </div>
+            <div class="stickers">
+              <h3>Stickers: </h3>
+              <% for(let i in stickers){ %>
+                <div class="sticker">
+                  <img src=<%= stickers[i].src %> />
+                  <p><%= stickers[i].name %></p>
+                </div>
+              <% } %>
+            </div>
+            <a href=<%= url %>>Buy Now</a>
+          </div>
+        </div>
+      </div>
+    <% }else{ %>
+        <h1>Nothing Founded</h1>
+    <% } %>
+  </div>
+</body>
+</html>
