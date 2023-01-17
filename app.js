@@ -43,31 +43,4 @@ app.get('/form', async(req, res)=>{
     hasSeen.push(result)
 })
 
-app.listen(5000, ()=>console.log('sever started at http://localhost:5000/form'))
-
-/* 
-      <div class="container">
-        <div class="card">
-          <div class="imgBx">
-            <img src=<%= img %>>
-          </div>
-          <div class="contentBx">
-            <h2><%= weaponName %> <%= skinName %></h2>
-            <div class="size">
-              <h3>Float: <%= float %></h3>
-              <h3>Price: R$<%= price %></h3>
-            </div>
-            <div class="stickers">
-              <h3>Stickers: </h3>
-              <% for(let i in stickers){ %>
-                <div class="sticker">
-                  <img src=<%= stickers[i].src %> />
-                  <p><%= stickers[i].name %></p>
-                </div>
-              <% } %>
-            </div>
-            <a href=<%= url %>>Buy Now</a>
-          </div>
-        </div>
-      </div>
-*/
+app.listen(process.env.PORT || 3000, ()=>console.log(`sever started at ${port}/form`))
