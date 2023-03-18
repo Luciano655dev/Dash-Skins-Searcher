@@ -11,9 +11,9 @@ app.use(express.static('views'))
 
 // Routes 
 
-app.get('/form', async(req, res)=>{
+app.get('/', async(req, res)=>{
     for(let i in hasSeen){
-        if(req.query.skinName == hasSeen[i].skinName && req.query.weaponName == hasSeen[i].weaponName){
+        if(req.query.skinName == hasSeen[i].skinName && req.query.weaponName == hasSeen[i].weaponName && req.query.lowestPrice <= hasSeen[i].lowestPrice){
             res.render(__dirname + '/views/form', {...hasSeen[i], nothingFounded: false })
             return
         }
@@ -43,4 +43,4 @@ app.get('/form', async(req, res)=>{
     hasSeen.push(result)
 })
 
-app.listen(process.env.PORT || 3000, ()=>console.log(`sever started at ${port}/form`))
+app.listen(3000, ()=>console.log(`sever started at http://localhost:3000/`))

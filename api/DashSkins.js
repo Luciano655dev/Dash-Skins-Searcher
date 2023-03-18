@@ -3,25 +3,26 @@ const puppeteer = require('puppeteer')
 module.exports = async function dashSkins(weapons){
 
     const {skinName, weaponName, lowestPrice} = weapons
+        if(skinName=='undefined' || weaponName == 'undefined'){ return false }
 
-        const browser = await puppeteer.launch()
+        const browser = await puppeteer.launch() // { headless: false } to see the browser
         const page = await browser.newPage()
+
         await page.goto(`https://dashskins.com.br/?search=${skinName}&weapon=${weaponName.toUpperCase()}&sort_by=price&sort_dir=asc&limit=&page=1`)
 
         await page.setViewport({
-            width: 2000,
-            height: 1000
+            width: 1920,
+            height: 1080
         });
     
         let hasRes = await page.evaluate(()=>{
-            if(document.querySelectorAll('.columns.is-multiline div').length <= 64) return false
+            if(document.querySelectorAll('.columns.is-multiline div').length <= 69) return false
             return true
         })
-        if(!hasRes) return false
-    
+        if(!hasRes) {await browser.close(); return false}
+
         return page.waitForSelector('.item-page .image.lazyLoad.isLoaded').then(async()=>{
             let skinInfo = await page.evaluate(()=>{
-    
                 let price = document.querySelector('.item-page').querySelectorAll('.title span')
                 price =  price[price.length-1].innerHTML
                 price = Number(price.slice(2, price.length).replace(',', '.'))
@@ -41,8 +42,10 @@ module.exports = async function dashSkins(weapons){
         
                 return { price, stickers: stickers.filter( (e) => e ), float, img, url }
             })
+
+            await browser.close()
             
-            if(skinInfo.price < lowestPrice & skinInfo != false){
+            if(skinInfo.price <= lowestPrice && skinInfo != false){
                 const {price, stickers, float, img, url} = skinInfo
                 return {
                     weaponName,
